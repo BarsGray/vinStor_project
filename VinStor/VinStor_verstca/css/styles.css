@@ -66,6 +66,7 @@ body {font-family: 'Onest';line-height: 1.4;}
   color: #0055FF;
 }
 /* ============================================= header ==================================================== */
+header {margin-bottom: -108px;}
 .header_top_row  .container {padding-top: 12px;padding-bottom: 18px;display: flex;justify-content: space-between;}
 .top_row_right {display: flex;gap: 24px;align-items: center;}
 .header_bottom_row {
@@ -74,9 +75,9 @@ body {font-family: 'Onest';line-height: 1.4;}
   border-radius: 20px;
   background: url('../img/bg.svg') center top / cover no-repeat;
 }
-.header_bottom_row.front_page {
+/* .header_bottom_row.front_page {
   background: unset;
-}
+} */
 .header_bottom_row .container {
   display: flex;
   justify-content: space-between;
@@ -117,13 +118,10 @@ body {font-family: 'Onest';line-height: 1.4;}
 }
 /* ============================================= bunner ==================================================== */
 .main_bunner {
-  max-width: 1840px;
-  margin: 0 auto;
   height: 652px;
-  padding: 124px 40px 100px;
-  border-radius: 20px;
-  background: url('../img/bg.svg') center / cover no-repeat;
-  /* filter: blur(100px); */
+  /* max-width: calc(1410px + var(--container_padding) * 2);
+  padding: 30px var(--container_padding) 100px;
+  margin: 0 auto; */
 }
 .main_bunner_cont {
   display: flex;
@@ -136,56 +134,6 @@ body {font-family: 'Onest';line-height: 1.4;}
   font-size: 56px;
   line-height: 1.2;
 }
-
-/*
-bg
-
-position: absolute;
-width: 1840px;
-height: 652px;
-left: calc(50% - 1840px/2);
-top: 38px;
-
-background: #E9ECF6;
-border-radius: 20px;
-
-
-backgroung_blur_ellipse
-
-position: absolute;
-width: 1184px;
-height: 1184px;
-left: calc(50% - 1184px/2);
-top: -1154px;
-
-background: linear-gradient(85.74deg, rgba(41, 76, 177, 0.5) 21.64%, rgba(56, 218, 169, 0.5) 107.13%);
-filter: blur(100px);
-
-
-backgroung_blur_ellipse
-
-position: absolute;
-width: 1326px;
-height: 1326px;
-left: calc(50% - 1326px/2 + 437px);
-top: 580px;
-
-background: linear-gradient(85.74deg, rgba(41, 76, 177, 0.5) 21.64%, rgba(56, 218, 169, 0.5) 107.13%);
-filter: blur(100px);
-
-
-backgroung_blur_ellipse
-
-position: absolute;
-width: 1516px;
-height: 1496px;
-left: calc(50% - 1516px/2 - 241px);
-top: 652px;
-
-background: linear-gradient(85.74deg, rgba(41, 76, 177, 0.5) 21.64%, rgba(56, 218, 169, 0.5) 107.13%);
-filter: blur(100px);
-*/
-
 /* ============================================= bunner ==================================================== */
 footer {
   height: 1000px;
