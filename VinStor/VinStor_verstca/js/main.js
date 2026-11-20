@@ -5,9 +5,9 @@
       el: ".bunner_pagination",
       clickable: true,
     },
-    autoplay: {
-      delay: 3000, // Интервал 3 секунды
-      // disableOnInteraction: false, // Не останавливать после взаимодействия
-      // pauseOnMouseEnter: true // Пауза при наведении
-    },
+    // autoplay: {
+    //   delay: 3000, // Интервал 3 секунды
+    //   // disableOnInteraction: false, // Не останавливать после взаимодействия
+    //   // pauseOnMouseEnter: true // Пауза при наведении
+    // },
   });
