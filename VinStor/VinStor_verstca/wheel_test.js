@@ -20,6 +20,7 @@ document.querySelectorAll('.wheel').forEach(wheel => {
   let animationId   = null;
 
   let selectedIndex = 0;
+  let selectedIndexLast = 0;
 
   function render() {
     if ((heightItem * 2) <= position) position = heightItem * 2;
@@ -110,8 +111,14 @@ document.querySelectorAll('.wheel').forEach(wheel => {
   wheel.addEventListener('pointercancel', stopDragging);
 
   function inputSet() {
-    console.log(wheelList.children[selectedIndex].textContent);
     wheelInput.value = wheelList.children[selectedIndex].textContent;
+
+    wheelList.children[selectedIndex].style.color = '#000';
+
+    if (selectedIndex !== selectedIndexLast)
+      wheelList.children[selectedIndexLast].style.color = '';
+
+    selectedIndexLast = selectedIndex;
   }
 
   render();
