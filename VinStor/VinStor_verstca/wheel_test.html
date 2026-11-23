@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,15 +20,18 @@
       user-select: none;
       -webkit-user-select: none;
     }
+
     .wheel:active {
       cursor: grabbing;
     }
+
     .wheel-list {
       width: 100%;
       transition: all .3s ease-in-out;
 
       will-change: transform;
     }
+
     .wheel-item {
       height: 42px;
       display: flex;
@@ -37,6 +41,12 @@
       color: #999;
       transition: color .3s ease-in-out;
     }
+    .wheel input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+    }
     .year-highlight {
       position: absolute;
       top: 84px;
@@ -45,15 +55,16 @@
       height: 42px;
       border-top: 1px solid #2878df;
       border-bottom: 1px solid #2878df;
-      background: rgba(40,120,223,.07);
+      background: rgba(40, 120, 223, .07);
       pointer-events: none;
     }
   </style>
 </head>
-<body>
-  
-  <div class="wheel">
 
+<body>
+
+  <div class="wheel">
+    <input type="text" value="ttt">
     <div class="wheel-list">
 
       <div class="wheel-item">2026</div>
@@ -98,7 +109,7 @@
     <div class="year-highlight"></div>
   </div>
   <div class="wheel">
-
+    <input type="text" value="ttt">
     <div class="wheel-list">
 
       <div class="wheel-item">2026</div>
@@ -144,4 +155,5 @@
   </div>
   <script src="wheel_test.js"></script>
 </body>
+
 </html>

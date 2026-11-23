@@ -1,7 +1,9 @@
 document.querySelectorAll('.wheel').forEach(wheel => {
 
-  const wheelList = wheel.querySelector('.wheel-list');
-  const wheelItem = wheel.querySelector('.wheel-item');
+  const wheelList  = wheel.querySelector('.wheel-list');
+  const wheelItem  = wheel.querySelector('.wheel-item');
+  const wheelInput = wheel.querySelector('input[type="text"]');
+
 
   const heightItem = wheelItem.scrollHeight;
   const height     = wheelList.scrollHeight;
@@ -27,7 +29,7 @@ document.querySelectorAll('.wheel').forEach(wheel => {
 
     selectedIndex = Math.round((heightItem * 2 - position) / heightItem);
     
-    console.log(wheelList.children[selectedIndex].textContent);
+    inputSet()
   }
   
   wheel.addEventListener('pointerdown', (e) => {    
@@ -106,6 +108,11 @@ document.querySelectorAll('.wheel').forEach(wheel => {
 
   wheel.addEventListener('pointerup', stopDragging);
   wheel.addEventListener('pointercancel', stopDragging);
+
+  function inputSet() {
+    console.log(wheelList.children[selectedIndex].textContent);
+    wheelInput.value = wheelList.children[selectedIndex].textContent;
+  }
 
   render();
 });
