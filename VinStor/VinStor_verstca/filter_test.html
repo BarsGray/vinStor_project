@@ -91,6 +91,7 @@
     // ====================================
     let lastY = 0;
     let lastTime = 0;
+    let lastFrameTime = 0;
     let velocity = 0;
     // ====================================
 
@@ -139,10 +140,19 @@
       render();
     });
 
-    function inertia() {
-      position += velocity * 16;
-      velocity *= 0.95;
+    function inertia(time) {
+      const deltaTime = time - lastFrameTime;
+      lastFrameTime = time;
+      
+      position += velocity * deltaTime;
+      // position += velocity * 16;
+      velocity *= Math.pow(0.95, deltaTime / 16);
+      // velocity *= 0.95;
       render();
+
+      if ((heightItem * 2) <= position) velocity = 0;
+      else if ((height - heightItem * 3) * -1 >= position) velocity = 0;
+      
       if (Math.abs(velocity) > 0.02) requestAnimationFrame(inertia);
       else stopAtNearest();
     }
@@ -155,13 +165,20 @@
       // 3. Включаем плавную анимацию
       wheelList.style.transition = 'transform .3s ease-out';
       // 4. Обновляем положение колеса
+
+      console.log(wheelList.children[selectedIndex].textContent);
+      
       render();
     }
 
     // Завершение перетаскивания
     function stopDragging() {
       isDragging = false;
-      inertia();
+
+      lastFrameTime = performance.now();
+      requestAnimationFrame(inertia);
+      
+      // inertia();
     }
     wheel.addEventListener('pointerup', stopDragging);
     wheel.addEventListener('pointercancel', stopDragging);
