@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .wheel {
+      width: 220px;
+      height: 210px;
+      margin: 50px auto;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #ddd;
+      background: #fff;
+
+      touch-action: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .wheel:active {
+      cursor: grabbing;
+    }
+    .wheel-list {
+      width: 100%;
+      transition: all .3s ease-in-out;
+
+      will-change: transform;
+    }
+    .wheel-item {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #999;
+      transition: color .3s ease-in-out;
+    }
+    .year-highlight {
+      position: absolute;
+      top: 84px;
+      left: 0;
+      right: 0;
+      height: 42px;
+      border-top: 1px solid #2878df;
+      border-bottom: 1px solid #2878df;
+      background: rgba(40,120,223,.07);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  
+    <!-- <div class="wheel">
+
+      <div class="wheel-list">
+
+          <div class="wheel-item">2026</div>
+          <div class="wheel-item">2025</div>
+          <div class="wheel-item">2024</div>
+          <div class="wheel-item">2023</div>
+          <div class="wheel-item">2022</div>
+          <div class="wheel-item">2021</div>
+          <div class="wheel-item">2020</div>
+          <div class="wheel-item">2019</div>
+          <div class="wheel-item">2018</div>
+          <div class="wheel-item">2017</div>
+          <div class="wheel-item">2016</div>
+          <div class="wheel-item">2015</div>
+          <div class="wheel-item">2014</div>
+          <div class="wheel-item">2013</div>
+          <div class="wheel-item">2012</div>
+          <div class="wheel-item">2011</div>
+          <div class="wheel-item">2010</div>
+          <div class="wheel-item">2009</div>
+          <div class="wheel-item">2008</div>
+          <div class="wheel-item">2007</div>
+          <div class="wheel-item">2006</div>
+          <div class="wheel-item">2005</div>
+          <div class="wheel-item">2004</div>
+          <div class="wheel-item">2003</div>
+          <div class="wheel-item">2002</div>
+          <div class="wheel-item">2001</div>
+          <div class="wheel-item">2000</div>
+          <div class="wheel-item">1999</div>
+          <div class="wheel-item">1998</div>
+          <div class="wheel-item">1997</div>
+          <div class="wheel-item">1996</div>
+          <div class="wheel-item">1995</div>
+          <div class="wheel-item">1994</div>
+          <div class="wheel-item">1993</div>
+          <div class="wheel-item">1992</div>
+          <div class="wheel-item">1991</div>
+          <div class="wheel-item">1990</div>
+
+      </div>
+      <div class="year-highlight"></div>
+  </div> -->
+  <div class="wheel">
+
+      <div class="wheel-list">
+
+          <div class="wheel-item">2026</div>
+          <div class="wheel-item">2025</div>
+          <div class="wheel-item">2024</div>
+          <div class="wheel-item">2023</div>
+          <div class="wheel-item">2022</div>
+          <div class="wheel-item">2021</div>
+          <div class="wheel-item">2020</div>
+          <div class="wheel-item">2019</div>
+          <div class="wheel-item">2018</div>
+          <div class="wheel-item">2017</div>
+          <div class="wheel-item">2016</div>
+          <div class="wheel-item">2015</div>
+          <div class="wheel-item">2014</div>
+          <div class="wheel-item">2013</div>
+          <div class="wheel-item">2012</div>
+          <div class="wheel-item">2011</div>
+          <div class="wheel-item">2010</div>
+          <div class="wheel-item">2009</div>
+          <div class="wheel-item">2008</div>
+          <div class="wheel-item">2007</div>
+          <div class="wheel-item">2006</div>
+          <div class="wheel-item">2005</div>
+          <div class="wheel-item">2004</div>
+          <div class="wheel-item">2003</div>
+          <div class="wheel-item">2002</div>
+          <div class="wheel-item">2001</div>
+          <div class="wheel-item">2000</div>
+          <div class="wheel-item">1999</div>
+          <div class="wheel-item">1998</div>
+          <div class="wheel-item">1997</div>
+          <div class="wheel-item">1996</div>
+          <div class="wheel-item">1995</div>
+          <div class="wheel-item">1994</div>
+          <div class="wheel-item">1993</div>
+          <div class="wheel-item">1992</div>
+          <div class="wheel-item">1991</div>
+          <div class="wheel-item">1990</div>
+
+      </div>
+      <div class="year-highlight"></div>
+  </div>
+  <script src="wheel_test.js"></script>
+</body>
+</html>
