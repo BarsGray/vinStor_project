@@ -1,0 +1,315 @@
+<div class="year-picker">
+  <div class="year-wheel" id="yearWheel">
+    <div class="year-track" id="yearTrack"></div>
+    <div class="year-highlight"></div>
+  </div>
+  <input type="hidden" id="selectedYear" name="year" value="2026">
+</div>
+
+<style>
+.year-picker {
+  width: 220px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.year-wheel {
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+
+.year-track {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.year-item {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  color: #999;
+  transition: color .15s;
+}
+
+.year-item.active {
+  color: #111;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.year-highlight {
+  position: absolute;
+  top: 84px;
+  left: 0;
+  right: 0;
+  height: 42px;
+  border-top: 1px solid #2878df;
+  border-bottom: 1px solid #2878df;
+  background: rgba(40,120,223,.07);
+  pointer-events: none;
+}
+</style>
+
+<script>
+(function () {
+  const minYear = 1990;
+  const maxYear = 2026;
+  const itemHeight = 42;
+
+  const wheel = document.getElementById('yearWheel');
+  const track = document.getElementById('yearTrack');
+  const input = document.getElementById('selectedYear');
+
+  if (!wheel || !track || !input) return;
+
+  const years = [];
+  for (let y = maxYear; y >= minYear; y--) {
+    years.push(y);
+  }
+
+  let index = 0;
+  let startY = 0;
+  let startIndex = 0;
+  let dragging = false;
+
+  years.forEach(year => {
+    const item = document.createElement('div');
+    item.className = 'year-item';
+    item.textContent = year;
+    track.appendChild(item);
+  });
+
+  function render() {
+    track.style.transform = `translateY(${84 - index * itemHeight}px)`;
+
+    [...track.children].forEach((item, i) => {
+      item.classList.toggle('active', i === index);
+      item.style.opacity =
+        Math.abs(i - index) === 0 ? 1 :
+        Math.abs(i - index) === 1 ? .65 :
+        Math.abs(i - index) === 2 ? .3 : 0;
+    });
+
+    input.value = years[index];
+
+    // Событие для других скриптов и фильтрации
+    input.dispatchEvent(new Event('change', {
+      bubbles: true
+    }));
+  }
+
+  function setIndex(value) {
+    index = Math.max(0, Math.min(years.length - 1, value));
+    render();
+  }
+
+  wheel.addEventListener('pointerdown', e => {
+    dragging = true;
+    startY = e.clientY;
+    startIndex = index;
+    wheel.setPointerCapture(e.pointerId);
+  });
+
+  wheel.addEventListener('pointermove', e => {
+    if (!dragging) return;
+
+    const distance = e.clientY - startY;
+    setIndex(Math.round(startIndex - distance / itemHeight));
+  });
+
+  function stop() {
+    dragging = false;
+  }
+
+  wheel.addEventListener('pointerup', stop);
+  wheel.addEventListener('pointercancel', stop);
+
+  wheel.addEventListener('wheel', e => {
+    e.preventDefault();
+    setIndex(index + Math.sign(e.deltaY));
+  }, { passive: false });
+
+  wheel.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') setIndex(index + 1);
+    if (e.key === 'ArrowUp') setIndex(index - 1);
+  });
+
+  render();
+})();
+
+
+
+
+(function () {
+  const minYear = 1990;
+  const maxYear = 2026;
+  const itemHeight = 42;
+
+  const wheel = document.getElementById('yearWheel');
+  const track = document.getElementById('yearTrack');
+  const input = document.getElementById('selectedYear');
+
+  if (!wheel || !track || !input) return;
+
+  const years = [];
+  for (let y = maxYear; y >= minYear; y--) years.push(y);
+
+  let position = 0;
+  let velocity = 0;
+  let dragging = false;
+  let lastY = 0;
+  let lastTime = 0;
+  let animation = null;
+
+  years.forEach(year => {
+    const item = document.createElement('div');
+    item.className = 'year-item';
+    item.textContent = year;
+    track.appendChild(item);
+  });
+
+  function clampPosition() {
+    position = Math.max(0, Math.min(years.length - 1, position));
+  }
+
+  function render() {
+    clampPosition();
+
+    track.style.transform = `translateY(${84 - position * itemHeight}px)`;
+
+    const selected = Math.round(position);
+
+    [...track.children].forEach((item, i) => {
+      const distance = Math.abs(i - position);
+
+      item.classList.toggle('active', i === selected);
+      item.style.opacity =
+        distance < 0.5 ? 1 :
+        distance < 1.5 ? 0.65 :
+        distance < 2.5 ? 0.3 : 0;
+    });
+
+    const year = years[selected];
+
+    if (input.value !== String(year)) {
+      input.value = year;
+      input.dispatchEvent(new Event('change', {
+        bubbles: true
+      }));
+    }
+  }
+
+  function animate() {
+    cancelAnimationFrame(animation);
+
+    let previousTime = performance.now();
+
+    function frame(now) {
+      const dt = Math.min((now - previousTime) / 16.67, 2);
+      previousTime = now;
+
+      if (!dragging) {
+        position += velocity * dt;
+        velocity *= Math.pow(0.94, dt);
+
+        if (position <= 0 || position >= years.length - 1) {
+          clampPosition();
+          velocity = 0;
+        }
+
+        if (Math.abs(velocity) < 0.015) {
+          position = Math.round(position);
+          velocity = 0;
+          render();
+          return;
+        }
+      }
+
+      render();
+      animation = requestAnimationFrame(frame);
+    }
+
+    animation = requestAnimationFrame(frame);
+  }
+
+  wheel.addEventListener('pointerdown', e => {
+    cancelAnimationFrame(animation);
+
+    dragging = true;
+    velocity = 0;
+    lastY = e.clientY;
+    lastTime = performance.now();
+
+    wheel.setPointerCapture(e.pointerId);
+  });
+
+  wheel.addEventListener('pointermove', e => {
+    if (!dragging) return;
+
+    const now = performance.now();
+    const dt = Math.max(now - lastTime, 1);
+    const delta = lastY - e.clientY;
+
+    position += delta / itemHeight;
+
+    const instantVelocity = delta / itemHeight / (dt / 16.67);
+
+    velocity = velocity * 0.35 + instantVelocity * 0.65;
+
+    lastY = e.clientY;
+    lastTime = now;
+
+    render();
+  });
+
+  function stop() {
+    if (!dragging) return;
+    dragging = false;
+
+    // Ограничиваем максимальную скорость
+    velocity = Math.max(-2.5, Math.min(2.5, velocity));
+
+    animate();
+  }
+
+  wheel.addEventListener('pointerup', stop);
+  wheel.addEventListener('pointercancel', stop);
+
+  wheel.addEventListener('wheel', e => {
+    e.preventDefault();
+    velocity += Math.sign(e.deltaY) * 0.45;
+    velocity = Math.max(-2.5, Math.min(2.5, velocity));
+    animate();
+  }, { passive: false });
+
+  render();
+})();
+
+</script>
+
+
+<!-- Как получить выбранный год
+
+В любом другом JavaScript-коде:
+javascript
+
+const year = document.getElementById('selectedYear').value;
+
+console.log(year); -->
+
+
+<!-- Или отслеживать изменение:
+javascript
+
+document.getElementById('selectedYear')
+  .addEventListener('change', function() {
+    console.log('Выбран год:', this.value);
+  }); -->
