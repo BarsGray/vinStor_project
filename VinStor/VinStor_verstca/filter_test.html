@@ -36,6 +36,17 @@
       font-size: 20px;
       color: #999;
     }
+    .year-highlight {
+      position: absolute;
+      top: 84px;
+      left: 0;
+      right: 0;
+      height: 42px;
+      border-top: 1px solid #2878df;
+      border-bottom: 1px solid #2878df;
+      background: rgba(40,120,223,.07);
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -51,13 +62,17 @@
           <div class="wheel-item">2022</div>
           <div class="wheel-item">2021</div>
           <div class="wheel-item">2020</div>
+          <div class="wheel-item">2019</div>
+          <div class="wheel-item">2018</div>
+          <div class="wheel-item">2017</div>
+          <div class="wheel-item">2016</div>
+          <div class="wheel-item">2015</div>
+          <div class="wheel-item">2014</div>
+          <div class="wheel-item">2013</div>
 
       </div>
-
+      <div class="year-highlight"></div>
   </div>
-  
-  <!-- <button id="up">Вверх</button>
-  <button id="down">Вниз</button> -->
 
   <script>
     
@@ -69,48 +84,37 @@
     let height = wheelList.scrollHeight;
     
     let position = heightItem * 2;
-    // let position = 0;
     let isDragging = false;
     let startY = 0;
     let startPosition = 0;
 
+    // ====================================
+    let lastY = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    // ====================================
+
     let selectedIndex = 0;
-    // const year = years[selectedIndex];
 
     function render() {
       if ((heightItem * 2) <= position) position = heightItem * 2;
       else if ((height - heightItem * 3) * -1 >= position) position = (height - heightItem * 3) * -1;
-      
-      // selectedIndex = Math.round(Math.abs(position) / heightItem);
-      // console.log(selectedIndex);
-
-      selectedIndex = Math.round(
-        (heightItem * 2 - position) / heightItem
-      );
-      // console.log(position);
-      // console.log(heightItem * 2 - position);
-      console.log(selectedIndex);
-
+      // selectedIndex = Math.round((heightItem * 2 - position) / heightItem);
       wheelList.style.transform = `translateY(${position}px)`;
     }
-    
-    // document.getElementById('up').addEventListener('click', () => {
-    //   position -= 42;
-    //   render();
-    // });
-
-    // document.getElementById('down').addEventListener('click', () => {
-    //   position += 42;
-    //   render();
-    // });
 
     wheel.addEventListener('pointerdown', (e) => {
       isDragging = true;
       startY = e.clientY;
       startPosition = position;
 
+      // ====================================
+      lastY = e.clientY;
+      lastTime = performance.now();
+      velocity = 0;
+      // ====================================
+
       wheelList.style.transition = 'unset';
-      
       // Закрепляем указатель за колесом
       wheel.setPointerCapture(e.pointerId);
     });
@@ -119,66 +123,50 @@
       if(!isDragging) return;
       const distance = e.clientY - startY;
       position = startPosition + distance;
+
+      // ====================================
+      const now = performance.now();
+
+      const deltaY = e.clientY - lastY;
+      const deltaTime = now - lastTime;
+
+      if (deltaTime > 0) velocity = deltaY / deltaTime;
+
+      lastY = e.clientY;
+      lastTime = now;
+      // ====================================
+
       render();
     });
+
+    function inertia() {
+      position += velocity * 16;
+      velocity *= 0.95;
+      render();
+      if (Math.abs(velocity) > 0.02) requestAnimationFrame(inertia);
+      else stopAtNearest();
+    }
+
+    function stopAtNearest() {
+      // 1. Вычисляем ближайший индекс
+      selectedIndex = Math.round((heightItem * 2 - position) / heightItem);
+      // 2. Вычисляем точную позицию элемента
+      position = heightItem * 2 - selectedIndex * heightItem;
+      // 3. Включаем плавную анимацию
+      wheelList.style.transition = 'transform .3s ease-out';
+      // 4. Обновляем положение колеса
+      render();
+    }
 
     // Завершение перетаскивания
     function stopDragging() {
       isDragging = false;
-      position = heightItem * 2 - selectedIndex * heightItem;
-      render();
-
-      wheelList.style.transition = 'all .3s ease-in-out';
+      inertia();
     }
     wheel.addEventListener('pointerup', stopDragging);
     wheel.addEventListener('pointercancel', stopDragging);
-    
-    // wheel.addEventListener('pointerup', function() {
-    //   isDragging = false;
-    //   wheelList.style.transition = 'all .3s ease-in-out';
-    //   // wheel.releasePointerCapture(event.pointerId);
-    // });
+
     render();
-  </script>
-  
-  <script>
-
-    // const wheel = document.querySelector('.wheel');
-    // const wheelList = document.querySelector('.wheel-list');
-
-    // let position = 0;
-
-    // let isDragging = false;
-
-    // let startY = 0;
-    // let startPosition = 0;
-
-    // function render() {
-    //   wheelList.style.transform = `translateY(${position}px)`;
-    // }
-
-    // // Начало перетаскивания
-    // wheel.addEventListener('pointerdown', function(event) {
-    //     isDragging = true;
-    //     startY = event.clientY;
-    //     startPosition = position;
-    //     wheel.setPointerCapture(event.pointerId);
-    // });
-
-    // // Движение мыши или пальца
-    // wheel.addEventListener('pointermove', function(event) {
-    //     if (!isDragging) return;
-    //     const distance = event.clientY - startY;
-    //     position = startPosition + distance;
-    //     render();
-    // });
-
-    // // Завершение перетаскивания
-    // function stopDragging() {
-    //     isDragging = false;
-    // }
-    // wheel.addEventListener('pointerup', stopDragging);
-    // wheel.addEventListener('pointercancel', stopDragging);
   </script>
 </body>
 </html>
