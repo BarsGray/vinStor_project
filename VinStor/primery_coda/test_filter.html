@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .custom-select {
+      position: relative;
+      width: 250px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Кнопка */
+    .custom-select__trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      color: #333;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Стрелка */
+    .custom-select__arrow {
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid #555;
+      border-bottom: 1.5px solid #555;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform .2s;
+    }
+
+    /* Открытое состояние */
+    .custom-select.active .custom-select__arrow {
+      transform: rotate(225deg) translateY(-2px);
+    }
+
+    /* Выпадающий список */
+    .custom-select__dropdown {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      width: 100%;
+      padding: 8px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+      z-index: 100;
+      display: none;
+    }
+
+    /* Открытие */
+    .custom-select.active .custom-select__dropdown {
+      display: block;
+    }
+
+    /* Поиск */
+    .custom-select__search {
+      width: 100%;
+      height: 38px;
+      padding: 0 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      outline: none;
+      box-sizing: border-box;
+      font-size: 13px;
+    }
+
+    .custom-select__search:focus {
+      border-color: #2563eb;
+    }
+
+    /* Список */
+    .custom-select__list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 0;
+      margin: 8px 0 0;
+      list-style: none;
+    }
+
+    /* Пункты */
+    .custom-select__list li {
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .custom-select__list li:hover,
+    .custom-select__list li.highlighted {
+      background: #f0f4ff;
+      color: #2563eb;
+    }
+
+    /* Выбранный пункт */
+    .custom-select__list li.selected {
+      background: #e8efff;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    /* Ничего не найдено */
+    .custom-select__empty {
+      display: none;
+      padding: 12px 5px;
+      color: #999;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .custom-select__empty.visible {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-select">
+
+    <button type="button" class="custom-select__trigger" aria-expanded="false">
+      <span class="custom-select__value">Выберите марку</span>
+      <span class="custom-select__arrow"></span>
+    </button>
+
+    <div class="custom-select__dropdown">
+      <input type="text" class="custom-select__search" placeholder="Поиск марки...">
+      <ul class="custom-select__list">
+        <li data-value="bmw">BMW</li>
+        <li data-value="audi">Audi</li>
+        <li data-value="mercedes">Mercedes-Benz</li>
+        <li data-value="toyota">Toyota</li>
+        <li data-value="volkswagen">Volkswagen</li>
+        <li data-value="honda">Honda</li>
+        <li data-value="hyundai">Hyundai</li>
+        <li data-value="kia">Kia</li>
+      </ul>
+      <div class="custom-select__empty">Ничего не найдено</div>
+    </div>
+
+    <input type="hidden" name="brand" value="">
+  </div>
+  <script>
+    document.querySelectorAll('.custom-select').forEach(select => {
+
+      const trigger = select.querySelector('.custom-select__trigger');
+      const value = select.querySelector('.custom-select__value');
+
+      const dropdown = select.querySelector('.custom-select__dropdown');
+      const search = select.querySelector('.custom-select__search');
+
+      const list = select.querySelector('.custom-select__list');
+      const items = [...list.querySelectorAll('li')];
+
+      const empty = select.querySelector('.custom-select__empty');
+      const hidden = select.querySelector('input[type="hidden"]');
+
+      let selectedIndex = -1;
+
+      // Открытие и закрытие
+      function toggleSelect(state) {
+        select.classList.toggle('active', state);
+        trigger.setAttribute('aria-expanded', state);
+
+        if (state) {
+          search.value = '';
+          filterItems();
+          search.focus();
+        } else {
+          selectedIndex = -1;
+        }
+      }
+
+      // Фильтрация
+      function filterItems() {
+        const query = search.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const match = text.includes(query);
+          item.hidden = !match;
+          if (match) {
+            visibleCount++;
+          }
+        });
+        empty.classList.toggle('visible', visibleCount === 0);
+        selectedIndex = -1;
+        updateHighlight();
+      }
+
+      // Подсветка пункта
+      function updateHighlight() {
+        items.forEach((item, index) => {
+          item.classList.toggle(
+            'highlighted',
+            index === selectedIndex && !item.hidden
+          );
+        });
+        if (selectedIndex >= 0 && !items[selectedIndex].hidden) {
+          items[selectedIndex].scrollIntoView({
+            block: 'nearest'
+          });
+        }
+      }
+
+      // Выбор значения
+      function selectItem(item) {
+        value.textContent = item.textContent;
+        hidden.value = item.dataset.value;
+        items.forEach(el => {
+          el.classList.toggle('selected', el === item);
+        });
+        toggleSelect(false);
+        trigger.focus();
+        hidden.dispatchEvent(new Event('change', {
+          bubbles: true
+        }));
+      }
+
+      // Клик по кнопке
+      trigger.addEventListener('click', () => {
+        toggleSelect(!select.classList.contains('active'));
+      });
+
+      // Поиск
+      search.addEventListener('input', filterItems);
+
+      // Выбор пункта
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          selectItem(item);
+        });
+      });
+
+      // Клавиатура
+      select.addEventListener('keydown', e => {
+        if (!select.classList.contains('active')) {
+          if (e.key === 'Enter' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            toggleSelect(true);
+          }
+          return;
+        }
+
+        const visibleItems = items.filter(item => !item.hidden);
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          selectedIndex++;
+          if (selectedIndex >= items.length ||
+            items[selectedIndex]?.hidden) {
+            selectedIndex = items.findIndex(item => !item.hidden);
+          }
+          updateHighlight();
+        }
+
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          selectedIndex--;
+          if (selectedIndex < 0 ||
+            items[selectedIndex]?.hidden) {
+            selectedIndex = visibleItems.length ? items.indexOf(visibleItems.at(-1)) : -1;
+          }
+          updateHighlight();
+        }
+
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedIndex >= 0 && !items[selectedIndex].hidden) {
+            selectItem(items[selectedIndex]);
+          }
+        }
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          toggleSelect(false);
+          trigger.focus();
+        }
+      });
+
+      // Клик вне select
+      document.addEventListener('click', e => {
+        if (!select.contains(e.target)) {
+          toggleSelect(false);
+        }
+      });
+
+    });
+  </script>
+</body>
+
+</html>

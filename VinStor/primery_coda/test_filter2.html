@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .custom-select {
+      position: relative;
+      width: 200px;
+    }
+
+    .select-value {
+      padding: 10px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .select-list {
+      display: none;
+      position: absolute;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      background: white;
+      border: 1px solid #ccc;
+    }
+
+    .custom-select.active .select-list {
+      display: block;
+    }
+
+    .select-list li {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .select-list li:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-select">
+    <div class="select-value">Выберите марку</div>
+
+    <ul class="select-list">
+      <li data-value="bmw">BMW</li>
+      <li data-value="audi">Audi</li>
+      <li data-value="toyota">Toyota</li>
+    </ul>
+
+    <input type="hidden" name="brand">
+  </div>
+  <script>
+    document.querySelectorAll('.custom-select').forEach(select => {
+      const value = select.querySelector('.select-value');
+      const list = select.querySelector('.select-list');
+      const input = select.querySelector('input');
+
+      value.addEventListener('click', () => {
+        select.classList.toggle('active');
+      });
+
+      list.addEventListener('click', e => {
+        if (e.target.tagName !== 'LI') return;
+
+        value.textContent = e.target.textContent;
+        input.value = e.target.dataset.value;
+
+        select.classList.remove('active');
+      });
+    });
+
+    // document.querySelectorAll('.custom-select').forEach(select => {
+    //   const value = select.querySelector('.select-value');
+    //   const list = select.querySelector('.select-list');
+    //   const input = select.querySelector('input');
+
+    //   let selected = [];
+
+    //   value.addEventListener('click', () => {
+    //     select.classList.toggle('active');
+    //   });
+
+    //   list.addEventListener('click', e => {
+    //     if (e.target.tagName !== 'LI') return;
+
+    //     const item = e.target;
+    //     const val = item.dataset.value;
+
+    //     if (selected.includes(val)) {
+    //       selected = selected.filter(v => v !== val);
+    //       item.classList.remove('active');
+    //     } else {
+    //       selected.push(val);
+    //       item.classList.add('active');
+    //     }
+
+    //     value.textContent = selected.length
+    //       ? selected.map(v => list.querySelector(`[data-value="${v}"]`).textContent).join(', ')
+    //       : 'Выберите марку';
+
+    //     input.value = selected.join(',');
+    //   });
+    // });
+  </script>
+</body>
+
+</html>
