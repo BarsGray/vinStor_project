@@ -208,6 +208,63 @@ body {font-family: 'Onest';line-height: 1.4;}
   from {transform: translateX(-100%);}
   to {transform: translateX(0);}
 }
+/* =============================================== main-filter ====================================================== */
+.multi_select {
+  border: 1px solid #C4CBD9;
+  color: var(--text_color_main);
+  padding: 14px 36px 14px 16px;
+  border-radius: 16px;
+  width: 100%;
+  cursor: pointer;
+  font-size: var(--text_size_small);
+}
+.multi_select_box {
+  position: relative;
+}
+.multi_select_box::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: url('../img/chevron_select.svg') center / contain no-repeat;
+}
+.multi_select::placeholder {
+  color: var(--text_color_main);
+}
+.select_button {
+  border-radius: 16px;
+  background-color: var(--akcent_color);
+  color: #fff;
+}
+.filetr_on_main {
+  border-radius: 30px;
+  background-color: #ffffff66;
+  padding: 40px;
+  margin-top: -64px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(50px);
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 30px;
+}
+.select_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: var(--text_size_small);
+  line-height: 1;
+  gap: 8px;
+}
+.select_button_icon {
+  background: url('../img/glass.svg') center / contain no-repeat;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
 /* ================================================== footer ====================================================== */
 footer {
   height: 1000px;

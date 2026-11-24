@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="multi-select" id="multiSelect">
+    <div class="selected-items" id="selectedItems">
+      <input type="text" id="searchInput" placeholder="Выберите варианты..." />
+    </div>
+
+    <div class="options" id="options">
+      <div class="option">HTML</div>
+      <div class="option">CSS</div>
+      <div class="option">JavaScript</div>
+      <div class="option">React</div>
+      <div class="option">Vue</div>
+      <div class="option">Angular</div>
+      <div class="option">TypeScript</div>
+      <div class="option">Node.js</div>
+    </div>
+  </div>
+
+  <style>
+    .multi-select {
+      position: relative;
+      width: 300px;
+      font-family: Arial, sans-serif;
+    }
+
+    .selected-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      min-height: 44px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: text;
+    }
+
+    .selected-items input {
+      flex: 1;
+      min-width: 100px;
+      border: none;
+      outline: none;
+      padding: 7px;
+      font-size: 14px;
+    }
+
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+      background: #e8eaff;
+      color: #4545aa;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .tag span {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .options {
+      display: none;
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      right: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px #0001;
+      z-index: 10;
+    }
+
+    .options.show {
+      display: block;
+    }
+
+    .option {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background: #f0f0ff;
+    }
+
+    .option.active {
+      background: #e8eaff;
+      color: #4545aa;
+    }
+  </style>
+
+  <script>
+    const container = document.getElementById("multiSelect");
+    const selectedItems = document.getElementById("selectedItems");
+    const searchInput = document.getElementById("searchInput");
+    const optionsBox = document.getElementById("options");
+    const options = [...document.querySelectorAll(".option")];
+
+    let selected = [];
+
+    function render() {
+      selectedItems.querySelectorAll(".tag").forEach(el => el.remove());
+
+      selected.forEach(value => {
+        const tag = document.createElement("div");
+        tag.className = "tag";
+
+        const text = document.createElement("span");
+        text.textContent = value;
+
+        const remove = document.createElement("span");
+        remove.textContent = "×";
+
+        remove.addEventListener("click", () => {
+          selected = selected.filter(item => item !== value);
+          update();
+        });
+
+        tag.append(text, remove);
+        selectedItems.insertBefore(tag, searchInput);
+      });
+
+      options.forEach(option => {
+        const active = selected.includes(option.textContent);
+        option.classList.toggle("active", active);
+      });
+    }
+
+    function update() {
+      render();
+      filterOptions();
+    }
+
+    function filterOptions() {
+      const query = searchInput.value.toLowerCase();
+
+      options.forEach(option => {
+        const matches = option.textContent.toLowerCase().includes(query);
+        const alreadySelected = selected.includes(option.textContent);
+
+        option.style.display =
+          matches && !alreadySelected ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener("focus", () => {
+      optionsBox.classList.add("show");
+    });
+
+    searchInput.addEventListener("input", filterOptions);
+
+    options.forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.textContent;
+
+        if (!selected.includes(value)) {
+          selected.push(value);
+        }
+
+        searchInput.value = "";
+        update();
+        searchInput.focus();
+      });
+    });
+
+    document.addEventListener("click", event => {
+      if (!container.contains(event.target)) {
+        optionsBox.classList.remove("show");
+      }
+    });
+
+    selectedItems.addEventListener("click", () => {
+      optionsBox.classList.add("show");
+      searchInput.focus();
+    });
+  </script>
+</body>
+</html>
