@@ -280,3 +280,63 @@ function filter_cars_archive_query($query) {
         $query->set('tax_query', $tax_query);
     }
 }
+?>
+
+<style>
+/* Обертка для позиционирования ::before (стрелки) */
+.multi_select_box {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* Стрелка через ::before */
+.multi_select_box::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+/* Поворот стрелки вверх, когда список открыт */
+.custom_dropdown.is-open .multi_select_box::before {
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+/* Сам инпут */
+.multi_select {
+  width: 100%;
+  padding: 12px 36px 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #111827;
+  font-size: 15px;
+  cursor: pointer;            /* меняем курсор с текстового на указатель */
+  user-select: none;          /* запрещаем случайное выделение текста */
+  text-overflow: ellipsis;    /* если выбрано много марок, обрезаем с троеточием (...) */
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.multi_select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Стиль для заблокированного инпута (например, "Сначала выберите марку") */
+.custom_dropdown.is-disabled .multi_select {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+</style>
