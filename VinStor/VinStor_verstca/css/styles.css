@@ -205,11 +205,11 @@ body {font-family: 'Onest';line-height: 1.4;}
   animation: bullet_animation 3s linear;
 }
 @keyframes bullet_animation {
-  from {transform: translateX(-100%);}
+  from {transform: translateX(-70%);}
   to {transform: translateX(0);}
 }
 /* =============================================== main-filter ====================================================== */
-.multi_select {
+.multi_select_input {
   border: 1px solid #C4CBD9;
   color: var(--text_color_main);
   padding: 14px 36px 14px 16px;
@@ -217,27 +217,21 @@ body {font-family: 'Onest';line-height: 1.4;}
   width: 100%;
   cursor: pointer;
   font-size: var(--text_size_small);
-}
-.multi_select_box {
   position: relative;
 }
-.multi_select_box::before {
+.multi_select_input::placeholder {
+  color: var(--text_color_main);
+}
+.multi_select_input::before {
   content: '';
   position: absolute;
   width: 16px;
   height: 16px;
   top: 50%;
   right: 12px;
+  cursor: pointer;
   transform: translateY(-50%);
   background: url('../img/chevron_select.svg') center / contain no-repeat;
-}
-.multi_select::placeholder {
-  color: var(--text_color_main);
-}
-.select_button {
-  border-radius: 16px;
-  background-color: var(--akcent_color);
-  color: #fff;
 }
 .filetr_on_main {
   border-radius: 30px;
@@ -258,6 +252,11 @@ body {font-family: 'Onest';line-height: 1.4;}
   font-size: var(--text_size_small);
   line-height: 1;
   gap: 8px;
+  border-radius: 16px;
+  background-color: var(--akcent_color);
+  color: #fff;
+  height: fit-content;
+  padding: 16px;
 }
 .select_button_icon {
   background: url('../img/glass.svg') center / contain no-repeat;
@@ -265,7 +264,61 @@ body {font-family: 'Onest';line-height: 1.4;}
   height: 16px;
   display: inline-block;
 }
-/* ================================================== footer ====================================================== */
-footer {
-  height: 1000px;
+.multi_select_list_wrap {
+  border-radius: 16px;
+  /* height: 205px; */
+  height: 375px;
+  padding: 8px;
+  box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.13);
 }
+.multi_select_list {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.multi_select_option {
+  position: relative;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  transition: all .1s ease-in-out;
+  font-size: var(--text_size_small);
+  padding: 10px 12px;
+}
+.multi_select_option:hover {background-color: #F8F8F8;}
+.multi_select_option:last-child {margin-bottom: 0;}
+.multi_select_option::after,
+.multi_select_option::before {content: '';position: absolute;top: 50%;transform: translateY(-50%);}
+.multi_select_option::after {
+  right: 15px;
+  width: 10px;
+  height: 10px;
+  background: url('../img/ok_multi_select_option.svg') center / contain no-repeat;
+  transform: translateY(-50%) scale(0);
+  transition: transform var(--transition_02s);
+}
+.multi_select_option.active::after {transform: translateY(-50%) scale(1);}
+.multi_select_option::before {
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border: 1px solid #E1E9F0;
+  background-color: #F5F5F5;
+  transition: background-color var(--transition_02s);
+}
+.multi_select_option:hover::before {background-color: #fff;}
+.multi_select_option.active::before {background-color: #fff;}
+/* Firefox */
+@supports (-moz-appearance: none) {
+  .multi_select_list {scrollbar-width: thin;scrollbar-color: #D9D9D9 #F8F8F8;}
+}
+/* Chrome, Edge, Safari */
+@supports not (-moz-appearance: none) {
+  .multi_select_list::-webkit-scrollbar {width: 4px;}
+  .multi_select_list::-webkit-scrollbar-thumb {background-color: #D9D9D9;border-radius: 4px;}
+  .multi_select_list::-webkit-scrollbar-track {background: #F8F8F8;border-radius: 10px;}
+}
+/* ================================================== footer ====================================================== */
+footer {height: 1000px;}
