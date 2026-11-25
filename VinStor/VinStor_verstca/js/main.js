@@ -1,5 +1,4 @@
 // ===================================== filter =====================================
-  const filetrOnMain = document.querySelector('.filetr_on_main');
   const multiSelectList = document.querySelectorAll('.multi_select_input');
 
   document.querySelectorAll('.multi_select_elem').forEach(selectElem => {
@@ -7,25 +6,30 @@
     let selected = [];
     
     selectElem.addEventListener('click', (e) => {
-      
-      if (e.target.closest('.multi_select_input') && !e.target.closest('.active')) {
+      const input = e.target.closest('.multi_select_input');
+
+      if (input) {
+        const isActive = input.classList.contains('active');
         closeMultiSelectList();
-        e.target.classList.toggle('active');
-      } else if (e.target.closest('.multi_select_input') && !e.target.closest('.multi_select_list_wrap')) {
-        closeMultiSelectList();
+        e.target.classList.toggle('active', !isActive);
+        return;
       }
 
-      if (e.target.closest('.multi_select_option')) {
+      const option = e.target.closest('.multi_select_option');
+
+      if (option) {
         e.target.classList.toggle('active');
         
+        const value = option.dataset.value;
         const inputNow = e.target.closest('.multi_select_elem').querySelector('input[type="hidden"]');
-        if (e.target.closest('.active')) {
-          if (!selected.includes(e.target.getAttribute('data-value'))) selected.push(e.target.getAttribute('data-value'));
-        } else {
-          selected = selected.filter(i => i !== e.target.dataset.value);
-        }
+        
+        if (option.classList.contains('active'))
+          if (!selected.includes(value)) selected.push(value);
+        else
+          selected = selected.filter(i => i !== value);
+
         console.log(selected);
-        inputNow.setAttribute('value', selected.join(','));
+        inputNow.value = selected.join(',');
       }
     });
 
