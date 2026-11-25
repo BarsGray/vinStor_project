@@ -56,31 +56,10 @@
     <input type="hidden" name="brand">
   </div>
   <script>
-    document.querySelectorAll('.custom-select').forEach(select => {
-      const value = select.querySelector('.select-value');
-      const list = select.querySelector('.select-list');
-      const input = select.querySelector('input');
-
-      value.addEventListener('click', () => {
-        select.classList.toggle('active');
-      });
-
-      list.addEventListener('click', e => {
-        if (e.target.tagName !== 'LI') return;
-
-        value.textContent = e.target.textContent;
-        input.value = e.target.dataset.value;
-
-        select.classList.remove('active');
-      });
-    });
-
     // document.querySelectorAll('.custom-select').forEach(select => {
     //   const value = select.querySelector('.select-value');
     //   const list = select.querySelector('.select-list');
     //   const input = select.querySelector('input');
-
-    //   let selected = [];
 
     //   value.addEventListener('click', () => {
     //     select.classList.toggle('active');
@@ -89,24 +68,45 @@
     //   list.addEventListener('click', e => {
     //     if (e.target.tagName !== 'LI') return;
 
-    //     const item = e.target;
-    //     const val = item.dataset.value;
+    //     value.textContent = e.target.textContent;
+    //     input.value = e.target.dataset.value;
 
-    //     if (selected.includes(val)) {
-    //       selected = selected.filter(v => v !== val);
-    //       item.classList.remove('active');
-    //     } else {
-    //       selected.push(val);
-    //       item.classList.add('active');
-    //     }
-
-    //     value.textContent = selected.length
-    //       ? selected.map(v => list.querySelector(`[data-value="${v}"]`).textContent).join(', ')
-    //       : 'Выберите марку';
-
-    //     input.value = selected.join(',');
+    //     select.classList.remove('active');
     //   });
     // });
+
+    document.querySelectorAll('.custom-select').forEach(select => {
+      const value = select.querySelector('.select-value');
+      const list = select.querySelector('.select-list');
+      const input = select.querySelector('input');
+
+      let selected = [];
+
+      value.addEventListener('click', () => {
+        select.classList.toggle('active');
+      });
+
+      list.addEventListener('click', e => {
+        if (e.target.tagName !== 'LI') return;
+
+        const item = e.target;
+        const val = item.dataset.value;
+
+        if (selected.includes(val)) {
+          selected = selected.filter(v => v !== val);
+          item.classList.remove('active');
+        } else {
+          selected.push(val);
+          item.classList.add('active');
+        }
+
+        value.textContent = selected.length
+          ? selected.map(v => list.querySelector(`[data-value="${v}"]`).textContent).join(', ')
+          : 'Выберите марку';
+
+        input.value = selected.join(',');
+      });
+    });
   </script>
 </body>
 
