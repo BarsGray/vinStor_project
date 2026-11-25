@@ -209,6 +209,7 @@ body {font-family: 'Onest';line-height: 1.4;}
   to {transform: translateX(0);}
 }
 /* =============================================== main-filter ====================================================== */
+.multi_select_elem {position: relative;}
 .multi_select_input {
   border: 1px solid #C4CBD9;
   color: var(--text_color_main);
@@ -266,10 +267,21 @@ body {font-family: 'Onest';line-height: 1.4;}
 }
 .multi_select_list_wrap {
   border-radius: 16px;
-  /* height: 205px; */
-  height: 375px;
+  height: 205px;
   padding: 8px;
   box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.13);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition_02s);
+}
+.multi_select_input.active + .multi_select_list_wrap {
+  visibility: visible;
+  opacity: 1;
 }
 .multi_select_list {
   height: 100%;
