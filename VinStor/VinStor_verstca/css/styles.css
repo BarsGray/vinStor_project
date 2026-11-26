@@ -206,7 +206,7 @@ body {font-family: 'Onest';line-height: 1.4;}
   transform: translateY(-50%);
   background: url('../img/chevron_select.svg') center / contain no-repeat;
 }
-.filetr_on_main {
+.filter_on_form {
   border-radius: 30px;
   background-color: #ffffff66;
   padding: 40px;
@@ -309,7 +309,7 @@ footer {height: 1000px;}
   .bunner_slider {max-height: 234px;}
   .h_nav_row .container {padding-top: 20px;padding-bottom: 20px;}
   .h_logo {height: 68px;}
-  .filetr_on_main {grid-template-columns: repeat(2,1fr);gap: 20px;padding: 30px;margin-top: -88px;}
+  .filter_on_form {grid-template-columns: repeat(2,1fr);gap: 20px;padding: 30px;margin-top: -88px;}
   .main_bunner_cats {gap: 16px;}
 }
 @media (max-width: 850px) {
