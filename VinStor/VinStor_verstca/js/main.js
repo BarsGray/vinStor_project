@@ -49,3 +49,27 @@ document.addEventListener('click', (e) => {if (!e.target.closest('.multi_select_
 function closeMultiSelectList() {
   multiSelectList.forEach((e) => {e.classList.remove('active');});
 }
+// ===================================== carusel_avto =====================================
+// const mediaQuery = window.matchMedia('(min-width: 768px)');
+// let swiper;
+// function handleBreakpoint(e) {
+//   if (e.matches) {
+//     // Desktop — создаём Swiper
+//     if (!swiper) {
+//       swiper = new Swiper('.swiper', {
+//         slidesPerView: 3,
+//         spaceBetween: 20,
+//       });
+//     }
+//   } else {
+//     // Mobile — уничтожаем Swiper
+//     if (swiper) {
+//       swiper.destroy(true, true);
+//       swiper = null;
+//     }
+//   }
+// }
+// mediaQuery.addEventListener('change', handleBreakpoint);
+// // Проверяем при первой загрузке
+// handleBreakpoint(mediaQuery);
+// ===================================== carusel_avto =====================================

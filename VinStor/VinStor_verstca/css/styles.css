@@ -18,21 +18,21 @@ a{color:inherit;}
 /* ===================================== fonts ========================================================= */
 @font-face {font-family: 'Onest';font-weight: 500;font-style: normal;src: local('AlumniSans'),url('../fonts/Onest-Medium.woff') format('woff'),url('../fonts/Onest-Medium.woff2') format('woff2');font-display: swap;}
 @font-face {font-family: 'Onest';font-weight: 400;font-style: normal;src: local('AlumniSans'),url('../fonts/Onest-Regular.woff') format('woff'),url('../fonts/Onest-Regular.woff2') format('woff2');font-display: swap;}
-/* ======================================================================================================== */
+/* ===================================================================================================== */
 :root {
   --container_padding: 26px;
+  --text_size_large: 24px;
   --text_size_medium: 18px;
   --text_size_small: 14px;
   --text_color_main: #383838;
   --title_color_main: #040303;
+  --title_size_h2: 34px;
   --akcent_color: #0055FF;
   --transition_02s: .2s ease-in-out;
   --transition_03s: .3s ease-in-out;
 
   /* --footer_padding_top: 60px;
-  --text_size_large: 24px;
   --title_size_h1: 64px;
-  --title_size_h2: 48px;
   --title_size_h3: 32px; */
 }
 /* ============================================= other ===================================================== */
@@ -87,9 +87,9 @@ body {font-family: 'Onest';line-height: 1.4;}
   width: 16px;
   height: 16px;
 }
+/* =========================================== menu_row ==================================================== */
 .h_logo {height: 80px;max-width: 200px;}
 .h_logo img {height: 100%;width: 100%;object-fit: contain;}
-/* ============================================= menu ==================================================== */
 .h_menu_row {display: flex;align-items: center;gap: 30px;}
 .h_menu_row nav ul {display: flex;gap: 30px;}
 /* ============================================= bunner ==================================================== */
@@ -122,7 +122,6 @@ body {font-family: 'Onest';line-height: 1.4;}
 .bunner_cat.eu::before {background-image: url('../img/icon_tags-1.svg');}
 .bunner_cat.ch::before {background-image: url('../img/icon_tags-2.svg');}
 .bunner_cat.kr::before {background-image: url('../img/icon_tags-3.svg');}
-/* ============================================= bunner-slider ==================================================== */
 .bunner_slider {flex: 1 1 0;padding-bottom: 16px;max-height: 436px;}
 .bunner_slider_slide a {width: 100%;height: 100%;display: flex;justify-content: center;position: relative;}
 .bunner_slider_slide a img {object-fit: contain;width: 100%;height: 100%;}
@@ -294,6 +293,105 @@ body {font-family: 'Onest';line-height: 1.4;}
   .multi_select_list::-webkit-scrollbar-track {background: #F8F8F8;border-radius: 10px;}
 }
 /* ============================================== carusel_avto ==================================================== */
+.section_carusel {
+  margin-top: 80px;
+  margin-bottom: 100px;
+}
+.carusel_top_row {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  margin-bottom: 30px;
+}
+.xit .carusel_title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.carusel_title {
+  font-size: var(--title_size_h2);
+  line-height: 1.2;
+}
+.carusel_nav_box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.carusel_btn_left,.carusel_btn_right {display: flex;align-items: center;justify-content: center;cursor: pointer;width: 26px;height: 26px;}
+.carusel_btn_more {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.carusel_item {
+  width: 25%;
+}
+.carusel_item {
+  padding: 8px;
+}
+.carusel_item_foto,.carusel_item_title,.carusel_item_desc,.carusel_item_specs {margin-bottom: 8px;}
+.carusel_item_foto {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.carusel_item_foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carusel_item_title {
+  font-size: var(--text_size_medium);
+  color: var(--text_color_main);
+  margin-bottom: 8px;
+}
+.carusel_item_desc {
+  font-size: var(--text_size_small);
+  margin-bottom: 8px;
+  color: #787878;
+}
+.carusel_item_specs {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.carusel_item_spec {
+  font-size: var(--text_size_small);
+  color: #787878;
+  padding-left: 22px;
+  position: relative;
+}
+.carusel_item_spec::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.carusel_item_spec.year::before {background: url('../img/calendar.svg');}
+.carusel_item_spec.mileage::before {background: url('../img/road.svg');}
+.carusel_item_spec.engin::before {background: url('../img/gas-pump.svg');}
+.carusel_item_price {font-size: var(--text_size_large);color: var(--text_color_main);}
+.xit_mark {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  background-color: #EFE0F5;
+  border-radius: 10px;
+  padding: 4px 7px 4px 4px;
+  font-size: 12px;
+  width: fit-content;
+  line-height: 1;
+}
+.xit_mark span {padding-top: 1px;}
+.xit_mark svg {width: 16px;height: 16px;}
 
 /* ================================================== footer ====================================================== */
 footer {height: 1000px;}
@@ -303,18 +401,22 @@ footer {height: 1000px;}
     --text_size_medium: 18px;
     --text_size_small: 14px;
   }
-  .main_bunner_title {font-size: 40px;}
+  /* header */
+  .h_nav_row .container {padding-top: 20px;padding-bottom: 20px;}
+  .h_logo {height: 68px;}
+  /* bunner */
   .bunner_info {top: 0;left: 0;}
   .main_bunner .container {gap: 12px;padding-top: 20px;padding-bottom: 132px;}
   .main_bunner_cont {padding-top: 0;}
+  .main_bunner_title {font-size: 40px;}
   .main_bunner_desc {font-size: 15px;}
   .bunner_slider {max-height: 234px;}
-  .h_nav_row .container {padding-top: 20px;padding-bottom: 20px;}
-  .h_logo {height: 68px;}
-  .filter_on_form {grid-template-columns: repeat(2,1fr);gap: 20px;padding: 30px;margin-top: -88px;}
   .main_bunner_cats {gap: 16px;}
+  /* main-filter */
+  .filter_on_form {grid-template-columns: repeat(2,1fr);gap: 20px;padding: 30px;margin-top: -88px;}
 }
 @media (max-width: 850px) {
+  /* bunner */
   .main_bunner {max-width: 100%;}
   .main_bunner .container {flex-direction: column-reverse;}
   .main_bunner_cont {width: 100%;}
