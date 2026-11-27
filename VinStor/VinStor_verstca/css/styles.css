@@ -31,6 +31,8 @@ a{color:inherit;}
   --transition_02s: .2s ease-in-out;
   --transition_03s: .3s ease-in-out;
 
+  --swiper-scrollbar-sides-offset: 0%;
+  --swiper-scrollbar-sides-offset: 0%;
   /* --footer_padding_top: 60px;
   --title_size_h1: 64px;
   --title_size_h3: 32px; */
@@ -303,14 +305,15 @@ body {font-family: 'Onest';line-height: 1.4;}
   gap: 38px;
   margin-bottom: 30px;
 }
-.xit .carusel_title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+/* .xit .carusel_title {
+
+} */
 .carusel_title {
   font-size: var(--title_size_h2);
   line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .carusel_nav_box {
   display: flex;
@@ -318,6 +321,8 @@ body {font-family: 'Onest';line-height: 1.4;}
   gap: 16px;
 }
 .carusel_btn_left,.carusel_btn_right {display: flex;align-items: center;justify-content: center;cursor: pointer;width: 26px;height: 26px;}
+.carusel_btn_left path,.carusel_btn_right path {transition: stroke var(--transition_02s);}
+.carusel_btn_left.swiper-button-disabled path,.carusel_btn_right.swiper-button-disabled path {stroke: #787878;}
 .carusel_btn_more {
   margin-left: auto;
   display: flex;
