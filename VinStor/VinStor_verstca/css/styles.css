@@ -305,9 +305,6 @@ body {font-family: 'Onest';line-height: 1.4;}
   gap: 38px;
   margin-bottom: 30px;
 }
-/* .xit .carusel_title {
-
-} */
 .carusel_title {
   font-size: var(--title_size_h2);
   line-height: 1.2;
@@ -399,8 +396,70 @@ body {font-family: 'Onest';line-height: 1.4;}
 .xit_mark svg {width: 16px;height: 16px;}
 
 /* ================================================== footer ====================================================== */
-footer {height: 1000px;}
+/* footer {height: 1000px;} */
+.footer {background-color: #F7F7F7;}
+.footer_top_inner .container {display: flex;justify-content: space-between;padding-top: 40px; padding-bottom: 38px;gap: 30px;}
+.footer_mid nav>ul {display: flex;gap: 136px;}
+.footer_mid nav>ul li,.footer_mid nav>ul li ul {display: flex; flex-direction: column; gap: 20px;}
+.footer_mid nav>ul>li {gap: 12px;}
+.footer_mid nav>ul li a {font-size: var(--text_size_small);color: #414141;line-height: 1.4;transition: color var(--transition_02s);}
+.footer_mid nav>ul>li.menu-item-has-children>a {color: #161616;font-size: var(--text_size_large);}
+.footer_contact_label {font-size: var(--text_size_large); color: #161616; line-height: 1.4; margin-bottom: 12px;}
+.footer_contact {font-size: var(--text_size_small); color: #161616; line-height: 1.4; transition: color var(--transition_02s);}
+.footer_right {display: grid; gap: 30px;align-content: space-between;}
+.footer_copy_inner {border-top: 1px solid #C3C3C3;}
+.footer_copy_inner .container {display: flex;justify-content: space-between;align-items: center;padding-top: 20px; padding-bottom: 20px;}
+.footer_copy_inner .company_copy {font-size: var(--text_size_small);}
 
+@media (hover: hover) {
+  .footer_mid nav>ul li:not(.menu-item-has-children) a:hover {color: var(--akcent_color_hover);}
+  a.footer_contact:hover {color: var(--akcent_color_hover);}
+}
+
+/* ================================================== footer ====================================================== */
+@media (max-width: 1350px) {
+  .footer_right {max-width: 228px;}
+}
+@media (max-width: 1100px) {
+  --footer_padding_top: 40px;
+  .footer_copy_inner .container {padding-top: 12px; padding-bottom: 12px;}
+  .footer{margin-top: 160px;}
+}
+@media (max-width: 1000px) {
+  :root {
+    --footer_padding_top: 20px;
+  }
+  .footer_top_inner .container {flex-direction: column-reverse;position: relative;}
+  .footer_right {grid-template-columns: repeat(2, 1fr);row-gap: 60px;margin-bottom: 30px;max-width: unset;}
+  .footer_main_btn {grid-column: 2;padding: 12px 39px;margin-left: auto;width: fit-content;}
+  .footer_left {position: absolute;top: var(--footer_padding_top);left: var(--container_padding);}
+  .footer_mid nav>ul {flex-direction: column;gap: 30px;}
+  .footer_mid nav>ul>li {max-width: 100%;border-bottom: 1px solid #AEAEAE;gap: 16px;}
+  .footer_mid nav>ul>li.menu-item-has-children ul {max-height: 0;overflow-y: hidden;transition: max-height var(--transition_03s);}
+  .footer_mid nav>ul>li.menu-item-has-children>a {display: flex;justify-content: space-between;flex-direction: row-reverse;}
+  .footer_mid nav>ul>li.menu-item-has-children>a::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: url('../img/chevron.svg');
+    transition: transform var(--transition_03s);
+  }
+  .footer_mid nav>ul li.menu-item-has-children ul {gap: 0;}
+  .footer_mid nav>ul li.menu-item-has-children ul li {margin-bottom: 20px;}
+  .footer_mid nav>ul>li.menu-item-has-children>a.active::before {transform: rotate(-180deg);}
+  .footer_top_inner .container {padding-bottom: 100px;}
+}
+@media (max-width: 750px) {
+  .footer{margin-top: 120px;}
+}
+@media (max-width: 610px) {
+  .footer_left {text-align: center;right: var(--container_padding);}
+  .footer_right {padding-top: 60px;grid-template-columns: 1fr;row-gap: 30px;}
+  .footer_main_btn {width: 100%; grid-column: 1;margin-bottom: 30px;}
+  .footer_top_inner .container {padding-bottom: 70px;}
+  .footer_copy_inner .container {flex-direction: column-reverse; gap: 36px;}
+}
+/* ================================================== footer ====================================================== */
 @media (max-width: 1100px) {
   :root {
     --text_size_medium: 18px;
