@@ -73,12 +73,13 @@ function closeMultiSelectList() {
 // // Проверяем при первой загрузке
 // handleBreakpoint(mediaQuery);
 const autopark_swiper = new Swiper('.carusel', {
-  slidesPerView: 4,
-  spaceBetween: 30,
+  slidesPerView: 3,
+  spaceBetween: 12,
   normalizeSlideIndex: false,
   navigation: {nextEl: ".carusel_btn_right",prevEl: ".carusel_btn_left"},
   scrollbar: {el: ".carusel .swiper-scrollbar"},
   breakpoints: {
+    1100: {slidesPerView: 4,spaceBetween: 12,scrollbar: {enabled: false}},
     740: {scrollbar: {enabled: false}}
   },
 });
