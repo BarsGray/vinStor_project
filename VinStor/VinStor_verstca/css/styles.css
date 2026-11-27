@@ -30,10 +30,10 @@ a{color:inherit;}
   --akcent_color: #0055FF;
   --transition_02s: .2s ease-in-out;
   --transition_03s: .3s ease-in-out;
-
+  --footer_inner_gap: 30px;
   --swiper-scrollbar-sides-offset: 0%;
   --swiper-scrollbar-sides-offset: 0%;
-  /* --footer_padding_top: 60px;
+  /* 
   --title_size_h1: 64px;
   --title_size_h3: 32px; */
 }
@@ -401,24 +401,25 @@ body {font-family: 'Onest';line-height: 1.4;}
 .footer .logo {display: block;max-height: 80px;margin-bottom: 20px;}
 .footer_top_inner .container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   padding-top: 40px;
   padding-bottom: 38px;
-  gap: 30px;
+  gap: var(--footer_inner_gap);
 }
-.footer_mid nav>ul {display: flex;gap: 30px;}
+.footer_mid {grid-column: 2/4;}
+.footer_mid nav>ul {display: flex;gap: var(--footer_inner_gap);}
 .footer_mid nav>ul li,.footer_mid nav>ul li ul {display: flex; flex-direction: column; gap: 20px;}
 .footer_mid nav>ul li {flex: 110;}
 .footer_mid nav>ul>li {gap: 30px;}
 .footer_mid nav>ul li a {font-size: var(--text_size_small);color: var(--text_color_main);transition: color var(--transition_02s);}
 .footer_mid nav>ul>li.menu-item-has-children>a {font-size: 20px;}
-.footer_subtext {color: var(--text_color_main);font-size: var(--text_size_small);padding-right: 30px;}
+.footer_subtext {color: var(--text_color_main);font-size: var(--text_size_small);}
+
+
+
+
+
 .footer_contact_label {font-size: 20px; color: var(--text_color_main); line-height: 1.4; margin-bottom: 12px;}
-
-
-
-
-
 
 .footer_contact {font-size: var(--text_size_small); color: #161616; line-height: 1.4; transition: color var(--transition_02s);}
 .footer_right {display: grid; gap: 30px;align-content: space-between;}
@@ -436,13 +437,13 @@ body {font-family: 'Onest';line-height: 1.4;}
   .footer_right {max-width: 228px;}
 }
 @media (max-width: 1100px) {
-  --footer_padding_top: 40px;
+  /* --footer_padding_top: 40px; */
   .footer_copy_inner .container {padding-top: 12px; padding-bottom: 12px;}
   .footer{margin-top: 160px;}
 }
 @media (max-width: 1000px) {
   :root {
-    --footer_padding_top: 20px;
+    /* --footer_padding_top: 20px; */
   }
   .footer_top_inner .container {flex-direction: column-reverse;position: relative;}
   .footer_right {grid-template-columns: repeat(2, 1fr);row-gap: 60px;margin-bottom: 30px;max-width: unset;}
